@@ -232,8 +232,12 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> imple
     private static void doExecuteCallback(boolean isBefore) {
         for (TransmittableThreadLocal<Object> threadLocal : holder.get().keySet()) {
             try {
-                if (isBefore) threadLocal.beforeExecute();
-                else threadLocal.afterExecute();
+                if (isBefore){
+                    threadLocal.beforeExecute();
+                }
+                else {
+                    threadLocal.afterExecute();
+                }
             } catch (Throwable t) {
                 if (logger.isLoggable(Level.WARNING)) {
                     logger.log(Level.WARNING, "TTL exception when " + (isBefore ? "beforeExecute" : "afterExecute") + ", cause: " + t.toString(), t);
@@ -443,8 +447,12 @@ public class TransmittableThreadLocal<T> extends InheritableThreadLocal<T> imple
                 backup.put(threadLocal, threadLocal.get());
 
                 final Object value = entry.getValue();
-                if (value == threadLocalClearMark) threadLocal.remove();
-                else threadLocal.set(value);
+                if (value == threadLocalClearMark){
+                    threadLocal.remove();
+                }
+                else {
+                    threadLocal.set(value);
+                }
             }
 
             return backup;

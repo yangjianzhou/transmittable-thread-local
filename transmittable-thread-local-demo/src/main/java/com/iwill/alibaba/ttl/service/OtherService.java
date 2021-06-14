@@ -31,6 +31,20 @@ public class OtherService {
             public void run() {
                 ThreadContext context = contextHolder.get();
                 System.out.println(context);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ThreadContext context = contextHolder.get();
+                        System.out.println("第三层 : " +context);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ThreadContext context = contextHolder.get();
+                                System.out.println("第四层  : " +context);
+                            }
+                        }).start();
+                    }
+                }).start();
             }
         });
     }
